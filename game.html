@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<head>
+	<title>Semestrální práce</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="libraries/bootstrap-3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css" />
+	<link rel="shortcut icon" href="img/bird_classic.png" type="image/png">
+</head>
+
+<body>
+	<nav>
+		<ul>
+			<li><a class="playGame" href="#playGame">Play game</a></li>
+			<li><a class="settings" href="#settings">Settings</a></li>
+			<li><a class="stats" href="#stats">Statistics</a></li>
+			<li><a class="about" href="#about">About</a></li>
+		</ul>
+	</nav>
+
+	<div id="allSections">
+		<section id="welcomePage">
+			<h2>Welcome to Flappy Bird game!</h2>
+			<svg></svg>
+		</section>
+
+		<section id="playGame">
+			<h2>Game</h2>
+			<div class="countdown"></div>
+			<canvas id="canvasik">
+				Your browser is not compatible with our technology to start the game.<br />
+				Please, download different browser.<br /><br />
+				Váš prohlížeč nepodporuje technologii, ve které byla vytvořena tato hra.<br />
+				Nainstalujte si chytrý a jednoduchý <a href="http://www.seznam.cz/prohlizec">prohlížeč</a> od Seznamu!
+			</canvas>
+		</section>
+
+		<section id="settings">
+			<div id="settingsDetail">
+				<h2>Settings</h2>
+				<p>Choose background: <input type="file" id="inputFile" /></p>
+				<p>Choose and drag to game on right:</p>
+				<table>
+					<tr>
+						<td>Bird:</td>
+						<td><img id="bird_classic" src="img/bird_classic.png" alt="Classic Bird" width="50" height="50" draggable="true" /></td>
+						<!--<td><img id="bird_profi" src="img/bird_profi.png" alt="Professional Bird" width="50" height="50" draggable="true" /></td>-->
+						<td><img id="bird_red" src="img/bird_red.png" alt="Red Bird" width="50" height="50" draggable="true" /></td>
+					</tr>
+					<tr>
+						<td>Obstacle:</td>
+						<td><img id="black" src="img/obstacle_black.png" alt="Black Obstacle" width="50" height="80" draggable="true" /></td>
+						<td><img id="red" src="img/obstacle_red.png" alt="Red Obstacle" width="50" height="80" draggable="true" /></td>
+					</tr>
+				</table>
+			</div>
+			<div id="settingsCanvasPreview">
+				<canvas id="canvasPreview">
+					Your browser is not compatible with our technology to start the game.<br />
+					Please, download different browser.<br /><br />
+					Váš prohlížeč nepodporuje technologii, ve které byla vytvořena tato hra.<br />
+					Nainstalujte si chytrý a jednoduchý <a href="http://www.seznam.cz/prohlizec">prohlížeč</a> od Seznamu!
+				</canvas>
+			</div>
+		</section>
+
+		<section id="stats">
+			<div id="statsRecent">
+				<h2>Your recent statistics</h2>
+				<div class="table-responsive">
+				<table class="table">
+					<thead>
+					<tr>
+						<th>Date</th>
+						<th>Score</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					<script>
+                        function renderTableRecent() {
+                            // Multiple rows, each contains 2 cells
+
+                            if (document.querySelectorAll("tbody").length < 2) {
+								let newBodyRecent = document.createElement("tbody");
+								document.querySelector("#statsRecent .table").appendChild(newBodyRecent);
+                            }
+
+                            if (!localStorage.date || !localStorage.score) return;
+                            let dateFromStorage = JSON.parse(localStorage.date);
+                            let scoreFromStorage = JSON.parse(localStorage.score);
+
+                            if (scoreFromStorage.length < 1) return;
+
+                            for (let x = scoreFromStorage.length - 1; x >= scoreFromStorage.length - 5; x--) {
+                                if (scoreFromStorage[x] === undefined || dateFromStorage[x] === undefined) break;
+                                let tableBody = document.querySelectorAll("tbody");
+                                let row = document.createElement("tr");
+
+                                for (let y = 0; y < 2; y++) {
+                                    let cell = document.createElement("td");
+
+                                    switch (y) {
+                                        case 0:
+                                            cell.textContent = dateFromStorage[x]; // better than innerHTML, because of XSS
+                                            break;
+                                        case 1:
+                                            cell.textContent = scoreFromStorage[x]; // better than innerHTML, because of XSS
+                                            break;
+                                    }
+                                    row.appendChild(cell);
+                                }
+                                tableBody[1].appendChild(row);
+                            }
+                        }
+                        renderTableRecent();
+					</script>
+				</table>
+			</div>
+			</div>
+			<div id="statsTop">
+				<h2>Top score</h2>
+				<table class="table">
+					<thead>
+					<tr>
+						<th>Date</th>
+						<th>Score</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					<script>
+                        function renderTableTop() {
+                            // Multiple rows, each contains 2 cells
+
+                            if (document.querySelectorAll("tbody").length < 3) {
+                                let newBodyTop = document.createElement("tbody");
+                                document.querySelector("#statsTop .table").appendChild(newBodyTop);
+                            }
+
+                            if (!localStorage.date || !localStorage.score) return;
+                            let dateFromStorage = JSON.parse(localStorage.date);
+                            let scoreFromStorage = JSON.parse(localStorage.score);
+                            let highScore = Math.max.apply(Math, scoreFromStorage);
+
+                            if (scoreFromStorage.length < 1) return;
+
+                            for (let x = 0; x < 1; x++) {
+                                let tableBody = document.querySelectorAll("tbody");
+                                let row = document.createElement("tr");
+
+                                for (let y = 0; y < 2; y++) {
+                                    let cell = document.createElement("td");
+
+                                    switch (y) {
+                                        case 0:
+                                            for (let x = 0; x < scoreFromStorage.length; x++) {
+                                                if (scoreFromStorage[x] === highScore) {
+                                                    cell.textContent = dateFromStorage[x]; // better than innerHTML, because of XSS
+                                                    break;
+                                                }
+                                            }
+                                            break;
+                                        case 1:
+                                            cell.textContent = highScore; // better than innerHTML, because of XSS
+                                            break;
+                                    }
+                                    row.appendChild(cell);
+                                }
+                                tableBody[2].appendChild(row);
+                            }
+                        }
+                        renderTableTop();
+					</script>
+				</table>
+			</div>
+		</section>
+
+		<section id="about">
+			<h2>About</h2>
+			<p>This game and the whole web page was created in B0B39KAJ course (shortcut of <br />Client applications in JavaScript)
+			taught by Czech Technical University in Prague.</p>
+			<p>May/June 2017</p>
+		</section>
+	</div>
+
+	<footer>
+		<p>Developed by Marek Tomaštík. Email <a href="mailto:tomastik.m@gmail.com">me</a> if you find any bugs :)</p>
+	</footer>
+
+	<script type="text/javascript" src="libraries/snap.svg-min.js"></script>
+	<script type="text/javascript" src="js/svg.js"></script>
+	<script type="text/javascript" src="js/config.js"></script>
+	<script type="text/javascript" src="js/Component.js"></script>
+	<script type="text/javascript" src="js/canvas.js"></script>
+	<script type="text/javascript" src="js/CanvasPreview.js"></script>
+	<script type="text/javascript" src="js/page.js"></script>
+	<script type="text/javascript" src="js/EventListeners.js"></script>
+</body>
+</html>
