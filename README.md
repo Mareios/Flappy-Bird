@@ -22,6 +22,7 @@ This game and the whole web page was created as a coursework in B0B39KAJ course 
   * Media API
   
 ## Implemented pages
+
 * game.html
 * game.html#playGame
 * game.html#settings
@@ -31,3 +32,9 @@ This game and the whole web page was created as a coursework in B0B39KAJ course 
 ## Where to find and play the game?
 
 You can either clone repository and run on localhost, or visit [homeopatic web page](http://www.homeopatie-tomastikova.cz/hra/game.html).
+
+## Future features
+
+* Spirit of bird while playing, which represents the best score
+* Control with mobile device
+* Live obstacles with shooting possibilities
