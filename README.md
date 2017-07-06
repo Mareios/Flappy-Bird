@@ -7,7 +7,7 @@ This game and the whole web page was created as a coursework in B0B39KAJ course 
 * HTML5
   * Canvas
   * SVG
-     * Snap.svg - <a href="http://snapsvg.io/" target="_blank">the JavaScript SVG library</a>
+     * Snap.svg - [the JavaScript SVG library](http://snapsvg.io/)
 * CSS3
   * transitions
   * animations
@@ -30,4 +30,4 @@ This game and the whole web page was created as a coursework in B0B39KAJ course 
 
 ## Where to find and play the game?
 
-You can either clone repository and run on localhost, or visit <a href="http://www.homeopatie-tomastikova.cz/hra/game.html" target="_blank">homeopatic web page</a>.
+You can either clone repository and run on localhost, or visit [homeopatic web page](http://www.homeopatie-tomastikova.cz/hra/game.html).
